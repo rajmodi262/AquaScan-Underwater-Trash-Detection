@@ -1,0 +1,27 @@
+Act as an expert presentation designer and technical copywriter. I need you to create the complete content and design structure for an 11-slide project presentation for my computer vision project called "AquaScan AI".
+
+### Project Context
+**AquaScan AI** is a premium, web-based underwater debris detection system. 
+- **Backend:** Uses a custom computer vision pipeline (OpenCV) featuring adaptive Z-score anomaly detection and multi-pass grid analysis to identify anthropogenic trash (like plastic bottles and bags) while strictly ignoring marine life and coral. 
+- **Frontend:** A world-class, investor-ready React application featuring a cinematic underwater video background, glassmorphism UI, interactive heatmaps, and animated statistical counters. 
+
+### Instructions
+For each of the 11 slides listed below, please provide:
+1. **Slide Title**
+2. **Main Content / Talking Points:** 3-4 concise, powerful bullet points.
+3. **Visual / Design Instructions:** Highly detailed instructions on layout, imagery, charts, and colors. The overarching aesthetic must be "Premium Deep Ocean Cinematic" (dark navy backgrounds, frosted glass cards, and glowing cyan/teal neon accents).
+
+### 11-Slide Structure
+* **Slide 1:** Title Slide (Project Name, Tagline, Team Members)
+* **Slide 2:** The Problem (Scale of ocean plastic pollution and the threat to marine ecosystems)
+* **Slide 3:** The Solution (Introducing AquaScan AI as a scalable software solution)
+* **Slide 4:** System Architecture (High-level data flow from image upload to detection report)
+* **Slide 5:** Core Computer Vision Tech (OpenCV, Adaptive Z-score, Grid-based Analysis)
+* **Slide 6:** User Interface & UX (Cinematic design, Glassmorphism, Video Backgrounds)
+* **Slide 7:** Key Platform Features (Smart Upload, Interactive Heatmaps, Comparison Sliders)
+* **Slide 8:** Performance & Metrics (Detection speed, reducing false positives, reliability)
+* **Slide 9:** Technical Challenges (Overcoming underwater lighting, distortion, and fish misclassification)
+* **Slide 10:** Future Scope (Integration with underwater ROVs/drones, real-time video feed analysis)
+* **Slide 11:** Conclusion & Q&A
+
+Make the tone highly professional, technically rigorous, and visionary. I want the audience (professors and potential investors) to be "wowed" by both the engineering depth and the premium product feel.

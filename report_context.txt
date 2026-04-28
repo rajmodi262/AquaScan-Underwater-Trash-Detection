@@ -1,0 +1,75 @@
+# AquaScan AI - Project Context for Report Generation
+
+This document contains all the technical details of the AquaScan AI project. Use this context to generate a comprehensive, highly detailed project report, README, and mind maps.
+
+## 1. Project Overview
+AquaScan AI is an advanced underwater trash detection system. It processes underwater images and video feeds to identify, localize, and classify anthropogenic debris (plastic bottles, bags, cans, etc.) while ignoring natural marine life (fish, coral, rocks). The system uses a hybrid approach, combining a Classical Computer Vision pipeline with Deep Learning (YOLOv8) to achieve high precision and recall even in challenging, turbid underwater environments.
+
+## 2. Core Architecture & Technologies
+- **Language:** Python (Backend), JavaScript/React (Frontend - minimal focus for report)
+- **Computer Vision Libraries:** OpenCV, NumPy, Pillow
+- **Deep Learning:** Ultralytics YOLOv8 (pre-trained on COCO, mapped to whitelist trash classes)
+- **API/Server:** FastAPI, Uvicorn
+- **Architecture Flow:**
+  1. Input Image
+  2. Preprocessing (Dehazing, White Balance, CLAHE, Denoising)
+  3. Dual-Branch Detection (Classical CV + YOLOv8)
+  4. Grid Analysis Engine (Multi-scale anomaly scoring)
+  5. Fusion & Scoring (Adaptive Z-score thresholding)
+  6. Output Generation (Annotated frames, Heatmaps, JSON reports)
+
+## 3. Team Member Contributions (Computer Vision Focus)
+The project is divided among 4 team members, all focusing heavily on the Computer Vision aspects.
+
+### Team Member 1: Image Preprocessing & Enhancement
+- **Role:** Developed the image restoration pipeline to combat severe underwater light attenuation and color cast.
+- **Contributions:**
+  - Implemented Gray World white balance to adaptively correct color distortion rather than relying on fixed red-channel boosting.
+  - Built a dark-channel-prior dehazing algorithm with guided filter refinement to remove turbidity and backscatter.
+  - Applied Contrast Limited Adaptive Histogram Equalization (CLAHE) to enhance local contrast without amplifying noise.
+  - Implemented Bilateral filtering to denoise the image while preserving critical edges needed for shape analysis.
+- **Challenges Faced:** Extreme variability in lighting and color at different depths made fixed thresholds fail. Over-enhancing contrast often amplified marine snow (particulates), creating false edges.
+
+### Team Member 2: Classical CV Object Detection & Feature Extraction
+- **Role:** Designed the algorithmic object extraction and shape classification logic without relying on neural networks.
+- **Contributions:**
+  - Engineered a multi-channel segmentation approach combining adaptive color deviation (LAB space) and absolute trash-color targeting (e.g., white plastic, neon colors).
+  - Replaced failing Otsu thresholding (which struggles with underwater unimodal histograms) with Adaptive Gaussian Thresholding.
+  - Used complex morphological operations (closing/opening with large kernels) to clean up noise and form solid contiguous blobs.
+  - Implemented contour feature extraction computing aspect ratio, solidity, circularity, and rectangularity to classify shapes into "bottle", "bag", "can", or "debris".
+- **Challenges Faced:** Separating white plastic from bright reflections or white sand. Coral and rocks often produced highly textured contours, requiring strict solidity and circularity thresholds to filter out natural geometry.
+
+### Team Member 3: Deep Learning Integration & Dual-Detector Fusion
+- **Role:** Integrated YOLOv8 and designed the fusion logic to merge neural network predictions with classical CV signals.
+- **Contributions:**
+  - Integrated YOLOv8s utilizing COCO weights, but implemented a strict **whitelist mapping** to only detect trash-relevant classes (e.g., backpacks -> bags, cups -> cans) to eliminate false positives on marine life.
+  - Solved the domain shift issue: YOLO was confused by heavily preprocessed/color-corrected images, so inference was routed to run on the *raw* image, with bounding boxes dynamically scaled back to the processed resolution.
+  - Designed the dual-detector fusion, taking the max signal between the YOLO bounding boxes and the classical CV contours to maximize recall.
+  - Implemented glowing, HUD-style futuristic visual annotations (ellipses, crosshairs) using OpenCV.
+- **Challenges Faced:** YOLOv8 frequently misclassified fish or coral as "kites" or "surfboards". The strict whitelist approach was necessary. Aligning bounding boxes between raw and processed coordinate spaces required precise scaling matrices.
+
+### Team Member 4: Grid Engine, Adaptive Z-Score Scoring & Evaluation
+- **Role:** Built the multi-scale grid analysis engine, the 6-check anomaly scoring algorithm, and the evaluation suite.
+- **Contributions:**
+  - Divided images into multi-scale grids (3x3, 5x5, 8x8) to catch both massive foreground debris and small background debris simultaneously.
+  - Designed the 6-check adaptive anomaly scoring system: Edge Density (Auto-Canny), Shape Irregularity, Color Anomaly, Texture Entropy (LBP + Laplacian variance), Frequency Anomaly (Windowed FFT), and Object Presence.
+  - Implemented Adaptive Z-Score thresholding: cells are flagged based on their deviation from the *image's own mean*, rather than hardcoded global thresholds.
+  - Built the evaluation script computing Precision, Recall, F1-score against ground-truth JSON annotations.
+- **Challenges Faced:** Rectangular grid boundaries caused severe artificial high-frequency artifacts in the FFT analysis, which was solved by applying a 2D Hanning window before transforming. Balancing the weights of the 6 checks required extensive empirical testing.
+
+## 4. Visual Assets Available
+The following generated images are available in the `docs/images/` directory for inclusion in the final report:
+1. `hero_banner.png`: Cinematic HUD overlay showing detection grid on an underwater scene.
+2. `system_architecture.png`: Technical flowchart of the pipeline (Input -> Preprocessing -> Dual Detection -> Grid -> Output).
+3. `preprocessing_pipeline.png`: Visual comparison of Raw -> Dehazed -> Color Corrected -> Denoised.
+4. `detection_methods.png`: 2x3 grid showing Edge, Shape, Color, Texture, Frequency, and YOLO methods.
+5. `heatmap_example.png`: Anomaly heatmap using the Inferno colormap showing debris density.
+6. `yolo_detection.png`: Object bounding boxes with confidence scores (bottle 87%, bag 72%).
+
+## Instructions for Report Generation
+When you process this file, please generate:
+1. A comprehensive, beautifully formatted README.md
+2. A section specifically highlighting the 4 team members, their focus areas, technical implementations, and challenges overcome.
+3. Markdown placeholders for the images using the paths provided above (e.g., `![System Architecture](docs/images/system_architecture.png)`).
+4. Mermaid.js diagrams for the System Architecture and the Preprocessing flow.
+5. Text-based mind maps detailing the components of the Computer Vision pipeline.

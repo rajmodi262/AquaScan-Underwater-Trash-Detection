@@ -1,0 +1,79 @@
+# 🚀 RAJ MODI: PROJECT CONTRIBUTION SURVIVAL GUIDE
+
+Since you are the **Lead Architect & ML Engineer**, your role sounds very complex, but it is actually very easy to explain! 
+
+If anyone asks what you did, **tell them you were the "Bridge Builder" and the "AI Integrator"**. You didn't just build the website or the math algorithms; you built the core engine that connects everything together.
+
+Here is exactly what you did, explained in simple English.
+
+---
+
+## 🏗️ YOUR 5 MAIN CONTRIBUTIONS
+
+### 1. Connecting the YOLOv8 AI Model
+*   **What it means:** YOLOv8 is a very smart artificial intelligence. You hooked it up so your app can see pictures and find trash.
+*   **What you should say:** *"I connected a smart AI model called YOLOv8 to our system. I set it up so it only looks for human-made trash like plastic bottles, and it knows to ignore natural things like fish and rocks."*
+
+### 2. Building the Main Server (FastAPI)
+*   **What it means:** You built the invisible "engine" that makes everything work together smoothly, taking the picture from the user and sending it to the AI.
+*   **What you should say:** *"I built the main server using a tool called FastAPI. It works like a fast middleman: it takes the picture from the user, gives it to the AI to find the trash, and sends the final image back without freezing the website."*
+
+### 3. Designing the Hybrid System
+*   **What it means:** You realized pure AI wasn't enough underwater, so you mixed it with normal color-correction math to get the best result.
+*   **What you should say:** *"I designed the main system layout. Because pure AI gets confused by blurry underwater photos, I created a 'hybrid' system. We use math to fix the image first, and then let the AI look at it. This makes it much more accurate."*
+
+### 4. Smart Math System for Finding Trash (Z-Score)
+*   **What it means:** Instead of using simple rules that accidentally flagged fish as trash, you used a math formula that adapts to the ocean background to accurately find unnatural objects.
+*   **What you should say:** *"I used a math formula (called a Z-Score) to help the system understand what belongs in the ocean and what doesn't. This stopped our program from accidentally labeling real fish or coral as trash."*
+
+### 5. The Dual-Shape Drawing System
+*   **What it means:** When the system finds trash, it draws different shapes around it so you know exactly which part of the system found it.
+*   **What you should say:** *"I made the system draw different shapes around the trash it finds. It draws rectangles if the AI found it, and ovals if our math formula found it. This makes it super easy to prove exactly how our program is working to anyone who asks."*
+
+---
+
+## 📊 YOUR CONTRIBUTION FLOW DIAGRAM
+
+If a professor asks you to draw or explain how your specific work functions, write down this flow:
+
+```text
+[ User Uploads Image on Website ]
+             |
+             v
+=========================================
+  YOUR FASTAPI BACKEND (The Server)
+=========================================
+             |
+             |---> (1) You receive the image.
+             |
+             |---> (2) You send the image to the YOLOv8 AI Model.
+             |         [ YOLOv8 AI finds the trash ]
+             |
+             |---> (3) You gather the AI results (bounding boxes).
+             |
+             |---> (4) You send the results back to the Website.
+             v
+[ Website shows the Scanned Image ]
+```
+
+---
+
+## 🧠 Q&A CHEAT SHEET (Memorize these!)
+
+**Q: "Raj, what programming language did you use for your backend?"**
+*A: "I used Python and a tool called FastAPI because it is extremely fast and lets our server do multiple things at once without crashing."*
+
+**Q: "Why did you choose YOLOv8?"**
+*A: "We chose YOLOv8 because it is very modern. It's fast enough to process video feeds but still highly accurate at spotting trash."*
+
+**Q: "What do you mean by 'Asynchronous' backend?"**
+*A: "It just means our server can multitask. While the AI is busy doing heavy thinking on an image, the server keeps talking to the website so the user doesn't just see a frozen screen."*
+
+**Q: "What was the hardest part of your contribution?"**
+*A: "The hardest part was that underwater photos are very blue and blurry. The AI wasn't used to this, so I had to design a system to carefully fix the images before giving them to the AI."*
+
+**Q: "How did you make sure the system doesn't confuse fish for trash?"**
+*A: "I gave the AI a strict 'whitelist', meaning it is only allowed to look for human-made trash. I also added our math formula (Z-Score) which ignores natural shapes and only targets things that look unnatural."*
+
+**Q: "Why does the system draw different shapes (ovals and rectangles) around the trash?"**
+*A: "To make it easy to see what is happening. By drawing ovals for our math formula and rectangles for the AI, we can visually prove exactly which part of our system detected the trash."*
