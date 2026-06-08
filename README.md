@@ -133,6 +133,43 @@ graph TD
     class G1,G2,G3,G4 highlight;
 ```
 
+### 🔄 User Flow Diagram
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor ROV as Underwater ROV (Client)
+    participant API as FastAPI Web Server
+    participant Pre as Image Preprocessor
+    participant CV as Classical CV Branch
+    participant DL as YOLOv8 DL Branch
+    participant Grid as Multi-Scale Grid Engine
+
+    ROV->>API: POST /api/detect (Image Byte Stream)
+    API->>API: Decode image to OpenCV matrix (cv2.imdecode)
+    
+    par Dual-Branch Processing
+        API->>Pre: Send raw image matrix
+        Pre->>Pre: Execute Gray World, CLAHE, DCP Dehazing & Bilateral Filter
+        Pre->>CV: Forward enhanced image
+        CV->>CV: Segment channels, threshold & classify geometries
+        CV-->>Grid: Return contour shapes & metadata
+    and
+        API->>DL: Send raw image matrix (bypasses preprocessor)
+        DL->>DL: Run YOLOv8 inference & filter COCO whitelist
+        DL->>DL: Apply affine scaling mapping to preprocessed space
+        DL-->>Grid: Return whitelisted bounding boxes
+    end
+
+    Grid->>Grid: Partition frame into 3x3, 5x5, 8x8 pyramids
+    Grid->>Grid: Compute 6-Check anomalies (Edge, Color, Entropy, FFT)
+    Grid->>Grid: Apply Adaptive Z-Score thresholding anomalies
+    Grid-->>API: Consolidate fused probability metrics
+
+    API->>API: Render HUD bounding boxes & inferno heatmaps
+    API-->>ROV: Return base64 images + JSON statistics report
+```
+
 ---
 
 ## 4. Deep Dive: Image Preprocessing Pipeline
